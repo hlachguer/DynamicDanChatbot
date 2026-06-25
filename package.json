@@ -1,0 +1,15 @@
+{
+  "name": "dynamic-dan-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fullstack AI FAQ chatbot for Dynamic EcoHome.",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
