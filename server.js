@@ -17,8 +17,6 @@ import { loadKnowledge, logChatEvent, publicPath, saveLead } from "./storage.js"
 
 await loadEnv();
 
-const port = Number(process.env.PORT || 3001);
-const host = process.env.HOST || "0.0.0.0";
 const supportEmail = process.env.SUPPORT_EMAIL || DEFAULT_SUPPORT_EMAIL;
 const supportPhone = process.env.SUPPORT_PHONE || DEFAULT_SUPPORT_PHONE;
 const publicDir = publicPath();
@@ -402,8 +400,8 @@ const server = http.createServer(async (req, res) => {
   sendJson(req, res, 405, { error: "Method not allowed." });
 });
 
+const host = process.env.HOST || "0.0.0.0";
 const port = Number(process.env.PORT || 3001);
-const host = "0.0.0.0";
 server.listen(port, host, () => {
   console.log(`Dynamic Dan running at http://${host}:${port}`);
 });
