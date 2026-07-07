@@ -1,0 +1,131 @@
+[
+  {
+    "id": "overview",
+    "title": "Dynamic EcoHome Overview",
+    "url": "https://dynamicecohome.com/",
+    "keywords": ["dynamic ecohome", "overview", "energy bills", "efficiency", "sustainability", "home improvement"],
+    "text": "Dynamic EcoHome describes its mission as empowering homeowners to reduce the burden of high energy bills while supporting financial freedom and sustainability. The company focuses on home energy and home improvement services.",
+    "shortAnswer": "Dynamic EcoHome helps homeowners explore home energy and efficiency improvements, with a focus on lowering energy use, improving comfort, and adding long-term value."
+  },
+  {
+    "id": "services",
+    "title": "Core Services",
+    "url": "https://dynamicecohome.com/",
+    "keywords": ["services", "solar", "hvac", "roofing", "windows", "home energy audit", "leasing", "businesses"],
+    "text": "Approved service categories from the support guidelines include home energy audits, solar, HVAC, roofing, windows, leasing information, and business services. Do not add extra service categories unless they are confirmed in the knowledge base.",
+    "shortAnswer": "Dynamic EcoHome can help with home energy audits, solar, HVAC, roofing, windows, leasing information, and business service questions."
+  },
+  {
+    "id": "energy-audit",
+    "title": "Home Energy Audit",
+    "url": "https://dynamicecohome.com/home-energy-audit",
+    "keywords": ["home energy audit", "energy audit", "free energy audit", "free audit", "audit", "efficiency check", "comfort", "safety", "energy use"],
+    "text": "Dynamic EcoHome offers free home energy audits. A home energy audit helps homeowners understand energy use, comfort issues, and safety considerations before choosing improvements.",
+    "shortAnswer": "Dynamic EcoHome offers free home energy audits. An audit is a good first step when you want to understand where energy is being wasted, why certain rooms feel uncomfortable, or which upgrades may make sense."
+  },
+  {
+    "id": "solar",
+    "title": "Solar Services",
+    "url": "https://dynamicecohome.com/solar",
+    "keywords": ["solar", "solar panels", "panels", "solar energy", "renewable", "electric bill"],
+    "text": "Dynamic EcoHome offers solar services. Visitors may ask about solar panels, solar energy, and whether solar could help with home energy goals. Do not provide exact pricing, savings, tax, rebate, or financing details unless confirmed in the knowledge base.",
+    "shortAnswer": "Dynamic EcoHome offers solar services for homeowners looking at renewable energy and energy-bill reduction options. The right solar recommendation depends on the home, energy usage, roof conditions, and available options."
+  },
+  {
+    "id": "hvac",
+    "title": "HVAC Services",
+    "url": "https://dynamicecohome.com/hvac",
+    "keywords": ["hvac", "air conditioning", "ac", "heating", "cooling", "furnace", "thermostat", "filter", "vent"],
+    "text": "Dynamic EcoHome offers HVAC services. Visitors may ask about heating, cooling, air conditioning, comfort, airflow, filters, thermostat issues, and system concerns. Give general safe troubleshooting steps, but do not diagnose dangerous conditions or replace a licensed technician.",
+    "shortAnswer": "Dynamic EcoHome offers HVAC services. For a basic check, make sure the thermostat is set correctly, the breaker is not tripped, the filter is clean, and vents are open. If you notice burning smells, smoke, sparking, or electrical issues, stop using the system and contact a professional right away."
+  },
+  {
+    "id": "roofing",
+    "title": "Roofing Services",
+    "url": "https://dynamicecohome.com/roofing",
+    "keywords": ["roof", "roofing", "leak", "shingles", "storm", "inspection", "attic"],
+    "text": "Dynamic EcoHome offers roofing services. Visitors may ask about roof issues, leaks, storm damage, shingles, inspections, and home protection. Do not provide insurance, warranty, or legal claim advice unless confirmed in the knowledge base.",
+    "shortAnswer": "Dynamic EcoHome offers roofing services. If you are seeing a leak, stain, missing shingles, or storm damage, it is smart to document what you see and have the roof inspected before the issue spreads."
+  },
+  {
+    "id": "windows",
+    "title": "Window Services",
+    "url": "https://dynamicecohome.com/windows",
+    "keywords": ["windows", "window", "drafts", "glass", "frame", "insulation", "heat", "comfort"],
+    "text": "Dynamic EcoHome offers window services. Visitors may ask about drafts, comfort, heat transfer, old windows, and energy efficiency. Do not quote product specs, brands, prices, or warranties unless confirmed in the knowledge base.",
+    "shortAnswer": "Dynamic EcoHome offers window services. Drafty or aging windows can affect comfort and energy use, so it helps to look for air leaks, condensation, damaged seals, or rooms that are consistently too hot or cold."
+  },
+  {
+    "id": "education-bill-audit-depth",
+    "title": "Energy Bill and Audit Education",
+    "url": "https://dynamicecohome.com/home-energy-audit",
+    "keywords": ["utility bill", "electric bill", "energy bill", "bill analysis", "kwh", "kilowatt", "kilowatt hour", "demand charge", "peak", "time of use", "rate plan", "base charge", "usage history", "seasonal usage", "high bill", "audit"],
+    "text": "For bill-related questions, explain that the useful clues are total monthly usage, kWh, rate structure, fixed charges, delivery charges, peak or demand charges when present, and seasonal spikes. A single bill can point to patterns, but a better review compares several months of usage with weather, household size, thermostat behavior, and major equipment. Dynamic EcoHome offers free home energy audits, which can connect bill patterns to the actual home by checking comfort complaints, air leakage, insulation, windows, roof or attic conditions, HVAC performance, and solar fit. Do not repeat account numbers, names, service addresses, meter numbers, or other sensitive bill details.",
+    "shortAnswer": "The most useful parts of an energy bill are usually usage, rate structure, fixed charges, peak or demand charges if present, and seasonal changes. Dynamic EcoHome can use a free home energy audit to connect those bill patterns to the home itself, including HVAC, insulation, windows, roof or attic conditions, and solar fit."
+  },
+  {
+    "id": "education-air-sealing-insulation",
+    "title": "Air Sealing and Insulation Education",
+    "url": "",
+    "publicSource": false,
+    "keywords": ["air sealing", "air leaks", "draft", "drafts", "weatherstripping", "caulk", "caulking", "attic", "crawlspace", "basement", "insulation", "r-value", "r value", "thermal bridge", "envelope", "weatherization", "cold room", "hot room"],
+    "text": "Air sealing and insulation are often early priorities because uncontrolled air leaks let conditioned air escape and outdoor air enter. Common problem areas include attics, rim joists, crawlspaces, basements, penetrations for plumbing or wiring, gaps around windows and doors, recessed lights, and duct chases. Air sealing should usually be paired with proper insulation because sealing slows air movement while insulation slows heat flow. The right insulation level depends on climate, where the insulation is installed, moisture conditions, and whether existing insulation is compressed, missing, dirty, or disturbed. If a homeowner mentions drafty rooms, cold floors, hot upstairs rooms, or high heating and cooling use, suggest a home energy audit before choosing upgrades.",
+    "shortAnswer": "Air sealing stops uncontrolled drafts and insulation slows heat flow. Together, they can improve comfort and reduce heating and cooling waste, especially around attics, crawlspaces, rim joists, and gaps around windows, doors, plumbing, wiring, and duct chases."
+  },
+  {
+    "id": "education-hvac-depth",
+    "title": "HVAC Efficiency Education",
+    "url": "https://dynamicecohome.com/hvac",
+    "keywords": ["hvac efficiency", "hvac", "air conditioner", "ac", "heat pump", "furnace", "duct", "ducts", "duct sealing", "air filter", "filter", "thermostat", "smart thermostat", "programmable thermostat", "baseboard", "uneven temperature", "short cycling", "humidity"],
+    "text": "Heating and cooling are often major drivers of home energy use, so HVAC questions should cover system age, filter condition, thermostat settings, airflow, duct leakage, room-to-room comfort, humidity, and whether equipment is oversized, undersized, or poorly installed. Simple checks include replacing dirty filters, keeping vents open and unblocked, checking thermostat location and schedule, and asking whether ducts run through hot attics, crawlspaces, garages, or other unconditioned areas. Heat pumps move heat rather than generating it directly, which can make them efficient for both heating and cooling when properly selected and installed. For older systems, uneven comfort, frequent repairs, short cycling, high humidity, or rising bills can justify a professional evaluation. Do not diagnose a system failure from chat alone, and hand off urgent electrical, burning, smoke, or safety issues.",
+    "shortAnswer": "HVAC efficiency depends on the equipment, ducts, thermostat behavior, airflow, filter condition, installation quality, and the home's insulation and air sealing. Dynamic EcoHome can help evaluate whether the issue is the system itself, the ducts, or the home envelope around it."
+  },
+  {
+    "id": "education-windows-depth",
+    "title": "Window Efficiency Education",
+    "url": "https://dynamicecohome.com/windows",
+    "keywords": ["window efficiency", "windows", "drafty windows", "window seal", "low-e", "low e", "storm windows", "window film", "shade", "blinds", "curtains", "condensation", "solar heat gain", "west facing", "south facing"],
+    "text": "Windows affect comfort through air leakage, conductive heat transfer, radiant heat gain, and sunlight exposure. Drafts, damaged seals, condensation between panes, hot west-facing rooms, cold window areas, and fading or glare can all point to window performance issues. Lower-cost measures may include weatherstripping, caulking, shades, curtains, films, or storm windows, while full replacement may make sense when windows are failing, inefficient, hard to seal, or a major comfort problem. In warm climates, shading and solar heat control can matter as much as insulating value. For Dynamic EcoHome responses, connect window concerns to comfort, energy use, and a home energy audit rather than quoting product specs or warranties.",
+    "shortAnswer": "Window efficiency is about more than the glass. Drafts, damaged seals, condensation, sun exposure, frame condition, and shading all affect comfort and energy use, so an audit can help decide whether sealing, shading, film, storm windows, or replacement should be considered."
+  },
+  {
+    "id": "education-solar-depth",
+    "title": "Solar Project Education",
+    "url": "https://dynamicecohome.com/solar",
+    "keywords": ["solar fit", "solar savings", "solar panels", "solar", "battery", "backup battery", "roof shade", "shade", "orientation", "net metering", "time of use", "utility rate", "annual usage", "summer bill", "winter bill", "electric usage"],
+    "text": "Solar fit depends on annual electricity usage, roof condition, available roof area, shading, roof direction and pitch, utility rate rules, when the household uses electricity, and whether the homeowner wants backup power. A single high summer bill can start the conversation, but solar planning should look at the full year because production and usage vary by season. If the utility has time-of-use rates, using energy when solar is producing can affect value. Batteries can help with backup power and load shifting, but they are a separate design decision from panels. Do not promise savings, incentives, tax details, lease terms, or financing terms unless a Dynamic EcoHome teammate verifies them.",
+    "shortAnswer": "Solar is usually evaluated with the full year in mind: usage history, roof condition, shade, roof direction, utility rate rules, and when the home uses power all matter. Dynamic EcoHome can review whether solar fits the home and energy goals."
+  },
+  {
+    "id": "education-roof-attic-efficiency",
+    "title": "Roof and Attic Efficiency Education",
+    "url": "https://dynamicecohome.com/roofing",
+    "keywords": ["roof efficiency", "roof", "roofing", "attic", "attic ventilation", "radiant barrier", "cool roof", "roof color", "solar ready", "leak", "moisture", "mold", "shingles", "heat gain"],
+    "text": "Roofing can affect energy efficiency through attic heat gain, roof color and reflectivity, roof condition, leaks, moisture, ventilation, and whether the attic is properly air sealed and insulated. In hot climates, reflective or cool roof choices can reduce heat absorbed by the roof, but climate, roof type, attic insulation, moisture control, and heating needs should be considered before recommending a roofing product. A roof inspection can also matter before solar because age, shade, orientation, and structural condition affect project timing. Do not provide insurance, warranty, product, or claim advice unless a Dynamic EcoHome teammate confirms it.",
+    "shortAnswer": "A roof can affect comfort and energy use through attic heat gain, leaks, moisture, ventilation, insulation, and solar readiness. If the roof is aging or the attic gets very hot, it is worth reviewing before major efficiency or solar upgrades."
+  },
+  {
+    "id": "leasing",
+    "title": "Leasing",
+    "url": "https://dynamicecohome.com/leasing",
+    "keywords": ["leasing", "lease", "lease information"],
+    "text": "Dynamic EcoHome has leasing information on its website. If a visitor asks for exact leasing terms, monthly payments, approval requirements, financing details, cancellation terms, or contract details, hand off to a human teammate.",
+    "shortAnswer": "Dynamic EcoHome has leasing information available. For exact terms, payment details, eligibility, or contract questions, a teammate should confirm the details directly."
+  },
+  {
+    "id": "businesses",
+    "title": "Business Services",
+    "url": "https://dynamicecohome.com/businesses",
+    "keywords": ["business", "businesses", "commercial", "company", "organization"],
+    "text": "Dynamic EcoHome has a businesses page according to the approved support guidelines. Do not claim specific commercial programs, prices, service areas, or terms unless they are added to this knowledge base.",
+    "shortAnswer": "Dynamic EcoHome has information for businesses. For a specific commercial project or organization, it is best to have a teammate confirm fit and next steps."
+  },
+  {
+    "id": "contact",
+    "title": "Contact and Support",
+    "url": "https://dynamicecohome.com/contact",
+    "keywords": ["contact", "support", "customer support", "email", "phone", "call", "human", "representative", "location"],
+    "text": "Customers can contact Dynamic EcoHome support at customersupport@dynamicecohome.com. The approved support guidelines list customer support phone routing as (972) 521-6014, Press 1. The contact page is the source for office and support details.",
+    "shortAnswer": "You can contact Dynamic EcoHome support at customersupport@dynamicecohome.com or call (972) 521-6014 and press 1."
+  }
+]
