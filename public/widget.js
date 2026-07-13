@@ -384,20 +384,38 @@
     syncOpenState() {
       this.root.classList.toggle("dd-open", this.isOpen);
       this.root.classList.toggle("dd-expanded", this.isExpanded);
-      this.panel.hidden = !this.isOpen;
-      this.panel.setAttribute("aria-hidden", String(!this.isOpen));
-      this.panel.style.display = this.isOpen ? "flex" : "none";
+    
+      if (this.isOpen) {
+        this.panel.hidden = false;
+        this.panel.style.display = "flex";
+        this.panel.setAttribute("aria-hidden", "false");
+      } else {
+        this.panel.setAttribute("aria-hidden", "true");
+        this.root.classList.add("dd-closing");
+    
+        window.setTimeout(() => {
+          if (!this.isOpen) {
+            this.panel.hidden = true;
+            this.panel.style.display = "none";
+            this.root.classList.remove("dd-closing");
+          }
+        }, 220);
+      }
+    
       if (this.teaser) {
         this.teaser.hidden = this.isOpen || this.isTeaserDismissed;
       }
+    
       if (this.launcher) {
         this.launcher.setAttribute("aria-expanded", String(this.isOpen));
       }
+    
       if (this.expandButton) {
         this.expandButton.setAttribute("aria-pressed", String(this.isExpanded));
       }
+    
       if (this.isOpen) {
-        window.setTimeout(() => this.input?.focus(), 80);
+        window.setTimeout(() => this.input?.focus(), 180);
       }
     }
 
