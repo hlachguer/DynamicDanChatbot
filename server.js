@@ -142,6 +142,7 @@ function validateLead(body) {
   const name = String(body.name || "").trim();
   const phone = String(body.phone || "").trim();
   const email = String(body.email || "").trim();
+  const zipcode = String(body.zipcode || body.zipCode || body.zip || "").trim();
 
   if (!name) {
     throw new Error("Name is required.");
@@ -155,10 +156,15 @@ function validateLead(body) {
     throw new Error("Email is not valid.");
   }
 
+  if (!/^\d{5}(-\d{4})?$/.test(zipcode)) {
+    throw new Error("A valid ZIP code is required.");
+  }
+
   return {
     name,
     phone,
     email,
+    zipcode,
     question: String(body.question || "").trim().slice(0, 1000),
     pageUrl: String(body.pageUrl || "").trim().slice(0, 500),
     visitorId: String(body.visitorId || "").trim().slice(0, 120)
