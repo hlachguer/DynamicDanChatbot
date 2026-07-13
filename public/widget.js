@@ -647,7 +647,8 @@
         '<div class="dd-lead-fields">',
         '<label>Name<input name="name" autocomplete="name" required /></label>',
         '<label>Phone<input name="phone" autocomplete="tel" required /></label>',
-        '<label>Email<input name="email" autocomplete="email" /></label>',
+        '<label>Email<input name="email" type="email" autocomplete="email" /></label>',
+        '<label>ZIP code<input name="zipcode" autocomplete="postal-code" inputmode="numeric" pattern="\\d{5}(-\\d{4})?" maxlength="10" required /></label>',
         '<button class="dd-lead-submit" type="submit">Send</button>',
         "</div>"
       ].join("");
