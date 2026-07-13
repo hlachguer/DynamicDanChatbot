@@ -72,6 +72,19 @@
     ].join("");
   }
 
+  function rosetteSvg() {
+    const petals = Array.from({ length: 32 }, (_, index) => {
+      const angle = index * 11.25;
+      return `<ellipse cx="50" cy="50" rx="16" ry="46" transform="rotate(${angle} 50 50)" />`;
+    }).join("");
+  
+    return [
+      '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" class="dd-rosette-svg">',
+      petals,
+      "</svg>"
+    ].join("");
+  }
+
   function expandSvg() {
     return [
       '<svg viewBox="0 0 24 24" aria-hidden="true" class="dd-action-icon">',
@@ -319,7 +332,17 @@
         this.launcher.type = "button";
         this.launcher.title = "Open Dynamic Dan";
         this.launcher.setAttribute("aria-label", "Open Dynamic Dan");
-        this.launcher.innerHTML = `${iconSvg()}<span class="dd-launcher-badge" aria-hidden="true">1</span>`;
+        this.launcher.innerHTML = [
+          '<span class="dd-launcher-wave dd-wave-one" aria-hidden="true"></span>',
+          '<span class="dd-launcher-wave dd-wave-two" aria-hidden="true"></span>',
+          '<span class="dd-launcher-wave dd-wave-three" aria-hidden="true"></span>',
+          '<span class="dd-launcher-wave dd-wave-four" aria-hidden="true"></span>',
+          `<span class="dd-launcher-rosette dd-rosette-one" aria-hidden="true">${rosetteSvg()}</span>`,
+          `<span class="dd-launcher-rosette dd-rosette-two" aria-hidden="true">${rosetteSvg()}</span>`,
+          `<span class="dd-launcher-rosette dd-rosette-three" aria-hidden="true">${rosetteSvg()}</span>`,
+          iconSvg(),
+          '<span class="dd-launcher-badge" aria-hidden="true">1</span>'
+        ].join("");
         this.launcher.addEventListener("click", () => {
           this.dismissTeaser();
           this.toggle();
