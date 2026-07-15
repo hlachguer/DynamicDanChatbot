@@ -77,7 +77,7 @@
       const angle = index * 11.25;
       return `<ellipse cx="50" cy="50" rx="16" ry="46" transform="rotate(${angle} 50 50)" />`;
     }).join("");
-  
+
     return [
       '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" class="dd-rosette-svg">',
       petals,
@@ -266,7 +266,7 @@
         "</div>",
         '<input class="dd-file-input" type="file" accept="application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp" />',
         "</form>",
-        '<div class="dd-footer">Dynamic EcoHome AI Support</div>'
+        '<div class="dd-footer">Dynamic EcoHome Support</div>'
       ].join("");
 
       this.logoImg = this.panel.querySelector(".dd-avatar img");
@@ -333,10 +333,6 @@
         this.launcher.title = "Open Dynamic Dan";
         this.launcher.setAttribute("aria-label", "Open Dynamic Dan");
         this.launcher.innerHTML = [
-          '<span class="dd-launcher-wave dd-wave-one" aria-hidden="true"></span>',
-          '<span class="dd-launcher-wave dd-wave-two" aria-hidden="true"></span>',
-          '<span class="dd-launcher-wave dd-wave-three" aria-hidden="true"></span>',
-          '<span class="dd-launcher-wave dd-wave-four" aria-hidden="true"></span>',
           `<span class="dd-launcher-rosette dd-rosette-one" aria-hidden="true">${rosetteSvg()}</span>`,
           `<span class="dd-launcher-rosette dd-rosette-two" aria-hidden="true">${rosetteSvg()}</span>`,
           `<span class="dd-launcher-rosette dd-rosette-three" aria-hidden="true">${rosetteSvg()}</span>`,
@@ -670,8 +666,8 @@
         '<div class="dd-lead-fields">',
         '<label>Name<input name="name" autocomplete="name" required /></label>',
         '<label>Phone<input name="phone" autocomplete="tel" required /></label>',
-        '<label>Email<input name="email" type="email" autocomplete="email" /></label>',
-        '<label>ZIP code<input name="zipcode" autocomplete="postal-code" inputmode="numeric" pattern="\\d{5}(-\\d{4})?" maxlength="10" required /></label>',
+        '<label>ZIP code<input name="zipCode" autocomplete="postal-code" inputmode="numeric" pattern="\\d{5}(-\\d{4})?" required /></label>',
+        '<label>Email<input name="email" autocomplete="email" /></label>',
         '<button class="dd-lead-submit" type="submit">Send</button>',
         "</div>"
       ].join("");
