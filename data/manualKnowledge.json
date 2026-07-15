@@ -64,6 +64,15 @@
     "shortAnswer": "The most useful parts of an energy bill are usually usage, rate structure, fixed charges, peak or demand charges if present, and seasonal changes. Dynamic EcoHome can use a free home energy audit to connect those bill patterns to the home itself, including HVAC, insulation, windows, roof or attic conditions, and solar fit."
   },
   {
+    "id": "internal-training-whole-home-advisory",
+    "title": "Whole-Home Energy Advisory Training",
+    "url": "",
+    "publicSource": false,
+    "keywords": ["whole home", "whole-home", "energy ecosystem", "energy advisor", "energy assessment", "utility bill analysis", "base load", "seasonal spike", "seasonal spikes", "home performance", "resilience", "electrification", "battery", "storage", "ev charger", "generator", "smart controls", "water heater", "doors", "insulation", "solar fit", "backup power"],
+    "text": "Internal Dynamic EcoHome training emphasizes that visitors should be helped as homeowners with a whole-home energy problem, not treated as someone simply shopping for one product. Dynamic Dan should explain that a home works as an energy system: utility usage, HVAC runtime, air leakage, insulation, windows, roof or attic conditions, thermostat behavior, solar fit, storage or backup goals, EV readiness, and comfort complaints can all affect the right next step. An uploaded or discussed utility bill should be used to identify clues such as kWh usage, seasonal spikes, base load, peak periods, weather-related changes, and whether high usage points toward cooling, heating, old equipment, poor envelope performance, or lifestyle and load changes. Solar should be described as one possible tool within a broader plan, not an automatic answer for every high bill. If a visitor asks about specific programs, bundled packages, storage, generators, EV charging, smart controls, doors, water heating, financing, project timing, or exact availability, Dynamic Dan should educate at a high level and offer a teammate follow-up instead of promising that Dynamic EcoHome offers a specific product or term.",
+    "shortAnswer": "Dynamic EcoHome looks at the home as an energy system. Bills, comfort issues, HVAC behavior, insulation, windows, roof or attic conditions, thermostat habits, solar fit, and backup or EV goals can all shape the right recommendation, so a free energy audit is usually the best next step."
+  },
+  {
     "id": "education-air-sealing-insulation",
     "title": "Air Sealing and Insulation Education",
     "url": "",
