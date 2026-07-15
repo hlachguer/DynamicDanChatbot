@@ -72,15 +72,40 @@
     ].join("");
   }
 
-  function rosetteSvg() {
-    const petals = Array.from({ length: 32 }, (_, index) => {
-      const angle = index * 11.25;
-      return `<ellipse cx="50" cy="50" rx="16" ry="46" transform="rotate(${angle} 50 50)" />`;
+  function contourPath(radius, seed) {
+    const points = 112;
+    const center = 60;
+    const commands = [];
+
+    for (let index = 0; index <= points; index += 1) {
+      const angle = (index / points) * Math.PI * 2;
+      const ridgeOne = Math.max(0, Math.cos(angle - seed * 0.72)) ** 8;
+      const ridgeTwo = Math.max(0, Math.cos(angle + seed * 1.13 + 1.8)) ** 10;
+      const wobble =
+        Math.sin(angle * 3 + seed) * 1.15 +
+        Math.sin(angle * 7 - seed * 0.6) * 0.9 +
+        Math.sin(angle * 13 + seed * 1.7) * 0.42 +
+        ridgeOne * 4.8 +
+        ridgeTwo * 3.2;
+      const currentRadius = radius + wobble;
+      const x = center + Math.cos(angle) * currentRadius;
+      const y = center + Math.sin(angle) * currentRadius;
+      commands.push(`${index === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`);
+    }
+
+    return commands.join(" ");
+  }
+
+  function contourSvg() {
+    const rings = Array.from({ length: 17 }, (_, index) => {
+      const radius = 30 + index * 1.45;
+      const seed = 0.55 + index * 0.47;
+      return `<path d="${contourPath(radius, seed)}" />`;
     }).join("");
 
     return [
-      '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" class="dd-rosette-svg">',
-      petals,
+      '<svg viewBox="0 0 120 120" aria-hidden="true" focusable="false" class="dd-contour-svg">',
+      rings,
       "</svg>"
     ].join("");
   }
@@ -333,9 +358,9 @@
         this.launcher.title = "Open Dynamic Dan";
         this.launcher.setAttribute("aria-label", "Open Dynamic Dan");
         this.launcher.innerHTML = [
-          `<span class="dd-launcher-rosette dd-rosette-one" aria-hidden="true">${rosetteSvg()}</span>`,
-          `<span class="dd-launcher-rosette dd-rosette-two" aria-hidden="true">${rosetteSvg()}</span>`,
-          `<span class="dd-launcher-rosette dd-rosette-three" aria-hidden="true">${rosetteSvg()}</span>`,
+          `<span class="dd-launcher-contour dd-contour-one" aria-hidden="true">${contourSvg()}</span>`,
+          `<span class="dd-launcher-contour dd-contour-two" aria-hidden="true">${contourSvg()}</span>`,
+          `<span class="dd-launcher-contour dd-contour-three" aria-hidden="true">${contourSvg()}</span>`,
           iconSvg(),
           '<span class="dd-launcher-badge" aria-hidden="true">1</span>'
         ].join("");
