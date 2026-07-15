@@ -142,6 +142,18 @@
     ].join("");
   }
 
+  function createTypingDots(label = "Dynamic Dan is typing") {
+    const dots = createElement("span", "dd-typing-dots");
+    dots.setAttribute("role", "status");
+    dots.setAttribute("aria-label", label);
+
+    for (let index = 0; index < 3; index += 1) {
+      dots.append(createElement("span"));
+    }
+
+    return dots;
+  }
+
   function createElement(tag, className, text) {
     const el = document.createElement(tag);
     if (className) {
@@ -481,8 +493,17 @@
             "div",
             `dd-message dd-${message.role === "assistant" ? "agent" : "user"}-message`
           );
-          const bubble = createElement("div", "dd-bubble");
-          appendLinkedText(bubble, message.content);
+          const bubble = createElement(
+            "div",
+            `dd-bubble${message.typing ? " dd-typing-bubble" : ""}`
+          );
+
+          if (message.typing) {
+            bubble.append(createTypingDots(message.ariaLabel));
+          } else {
+            appendLinkedText(bubble, message.content);
+          }
+
           row.append(bubble);
 
           if (message.sources?.length) {
@@ -575,7 +596,12 @@
       this.minimizeLeadForm();
       this.lastQuestion = `Uploaded energy bill: ${fileName}`;
       this.messages.push({ role: "user", content: `Uploaded energy bill: ${fileName}` });
-      this.messages.push({ role: "assistant", content: "Reviewing your energy bill..." });
+      this.messages.push({
+        role: "assistant",
+        content: "",
+        typing: true,
+        ariaLabel: "Dynamic Dan is reviewing your energy bill"
+      });
       this.renderMessages();
       this.setLoading(true);
 
@@ -632,7 +658,12 @@
       this.input.value = "";
       this.syncComposeState();
       this.messages.push({ role: "user", content: message });
-      this.messages.push({ role: "assistant", content: "Typing..." });
+      this.messages.push({
+        role: "assistant",
+        content: "",
+        typing: true,
+        ariaLabel: "Dynamic Dan is typing"
+      });
       this.renderMessages();
       this.setLoading(true);
 
@@ -645,7 +676,7 @@
             pageUrl: window.location.href,
             visitorId: this.visitorId,
             conversation: this.messages
-              .filter((item) => item.content !== "Typing...")
+              .filter((item) => !item.typing)
               .slice(-8)
           })
         });
