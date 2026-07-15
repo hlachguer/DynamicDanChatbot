@@ -117,23 +117,31 @@
   }
 }
 
-@keyframes dd-rosette-ripple {
+@keyframes dd-contour-ripple {
   0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.62) rotate(0deg);
+    opacity: 0.24;
+    transform: translate(-50%, -50%) scale(0.9) rotate(0deg);
   }
 
-  12% {
-    opacity: 0.72;
-  }
-
-  62% {
-    opacity: 0.34;
+  45% {
+    opacity: 0.74;
+    transform: translate(-50%, -50%) scale(1.02) rotate(13deg);
   }
 
   100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.24) rotate(34deg);
+    opacity: 0.18;
+    transform: translate(-50%, -50%) scale(1.06) rotate(28deg);
+  }
+}
+
+@keyframes dd-contour-shimmer {
+  0%,
+  100% {
+    stroke-opacity: 0.28;
+  }
+
+  50% {
+    stroke-opacity: 0.86;
   }
 }
 
@@ -715,47 +723,74 @@
   transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
-.dd-launcher-rosette {
+.dd-launcher-contour {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 118px;
-  height: 118px;
-  animation: dd-rosette-ripple 4s ease-out infinite;
-  opacity: 0;
+  width: 104px;
+  height: 104px;
+  animation: dd-contour-ripple 4.8s ease-in-out infinite alternate;
+  opacity: 0.55;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.62);
+  transform: translate(-50%, -50%) scale(0.95);
   transform-origin: center;
   z-index: -1;
 }
 
-.dd-rosette-svg {
+.dd-contour-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.24));
 }
 
-.dd-rosette-svg ellipse {
+.dd-contour-svg path {
   fill: none;
-  stroke: rgba(249, 143, 48, 0.44);
-  stroke-width: 0.9;
+  stroke: rgba(255, 255, 255, 0.58);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.58;
   vector-effect: non-scaling-stroke;
 }
 
-.dd-rosette-two {
-  animation-delay: 1.15s;
+.dd-contour-svg path:nth-child(3n) {
+  animation: dd-contour-shimmer 3.4s ease-in-out infinite;
+  stroke: rgba(249, 143, 48, 0.62);
+  stroke-width: 0.84;
 }
 
-.dd-rosette-two .dd-rosette-svg ellipse {
-  stroke: rgba(3, 61, 79, 0.24);
+.dd-contour-svg path:nth-child(5n) {
+  stroke: rgba(3, 61, 79, 0.42);
+  stroke-width: 0.72;
 }
 
-.dd-rosette-three {
-  animation-delay: 2.3s;
+.dd-contour-two {
+  animation-delay: -1.6s;
+  opacity: 0.36;
 }
 
-.dd-rosette-three .dd-rosette-svg ellipse {
-  stroke: rgba(249, 143, 48, 0.28);
+.dd-contour-two .dd-contour-svg {
+  transform: rotate(21deg);
+}
+
+.dd-contour-two .dd-contour-svg path {
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 0.45;
+}
+
+.dd-contour-three {
+  animation-delay: -3.2s;
+  animation-direction: alternate-reverse;
+  opacity: 0.28;
+}
+
+.dd-contour-three .dd-contour-svg {
+  transform: rotate(-16deg);
+}
+
+.dd-contour-three .dd-contour-svg path {
+  stroke: rgba(249, 143, 48, 0.24);
+  stroke-width: 0.5;
 }
 
 .dd-launcher .dd-icon,
@@ -967,7 +1002,8 @@
     animation: none;
   }
 
-  .dd-launcher-rosette {
+  .dd-launcher-contour,
+  .dd-contour-svg path {
     animation: none;
     opacity: 0;
   }
