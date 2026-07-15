@@ -161,7 +161,7 @@ export function handoffReply({
 }
 
 export function pricingReply() {
-  return "Pricing depends on the home, energy usage, location, and the right solution for your needs. Share your name and phone number, and a Dynamic EcoHome teammate can follow up with accurate details.";
+  return "Pricing depends on the home, energy usage, ZIP code, and the right solution for your needs. Share your name, phone number, and ZIP code, and a Dynamic EcoHome teammate can follow up with accurate details.";
 }
 
 export function safetyReply({
@@ -181,7 +181,7 @@ export function buildCompanyKnowledgeContext(matches, fallbackKnowledge = []) {
       }
       if (item.publicSource === false) {
         lines.push(
-          "SOURCE NOTE: Use this only as general educational background. Do not mention or cite third-party source names."
+          "SOURCE NOTE: Use this only as customer-friendly background for education and routing. Do not mention or cite source names, third-party names, internal manuals, employee training, or contractor materials."
         );
       }
       lines.push(`CONTENT: ${item.text}`);
