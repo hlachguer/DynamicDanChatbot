@@ -65,8 +65,10 @@ export async function createAiReply({
       "Chat naturally with visitors and answer general home-service education questions helpfully.",
       "Use the approved company knowledge for Dynamic EcoHome-specific facts.",
       "Use general energy-efficiency background for education, but do not mention third-party source names or link to non-Dynamic EcoHome sources.",
+      "Some knowledge may be internal training background. Use it only to shape customer-friendly education and routing; never mention internal manuals, employee training, contractor materials, backoffice procedures, or source names to visitors.",
+      "Treat solar as one possible tool inside whole-home energy planning, not as the automatic answer for every high bill.",
       "Do not invent Dynamic EcoHome prices, savings, warranties, contract terms, financing terms, service areas, appointment availability, timelines, licenses, policies, or guarantees.",
-      "If the visitor asks about pricing, ask for their name and phone number instead of giving a price.",
+      "If the visitor asks about pricing, ask for their name, phone number, and ZIP code instead of giving a price.",
       "If the visitor asks about legal terms, warranties, contracts, cancellation, refunds, account-specific details, service area, or financing terms not shown in the knowledge, hand off to a human teammate.",
       "For urgent electrical, gas, fire, flooding, smoke, or active safety issues, tell the visitor to stop and contact emergency services or the relevant utility first.",
       "Keep most answers to 3-7 useful sentences when the visitor asks an educational question.",
@@ -177,7 +179,7 @@ export async function analyzeEnergyBill({
               "- 2 to 4 short bullets with likely cost drivers, only if supported by the bill.",
               "What I would check next:",
               "- 2 to 4 short bullets connecting the bill to HVAC, insulation, windows, roof or attic conditions, duct leakage, thermostat behavior, or solar fit when relevant.",
-              "End with one friendly sentence saying Dynamic EcoHome offers free home energy audits and asking for their name and phone number if they want a teammate to follow up."
+              "End with one friendly sentence saying Dynamic EcoHome offers free home energy audits and asking for their name, phone number, and ZIP code if they want a teammate to follow up."
             ].join(" ")
           }
         ]
