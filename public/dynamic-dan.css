@@ -145,6 +145,20 @@
   }
 }
 
+@keyframes dd-typing-bounce {
+  0%,
+  80%,
+  100% {
+    opacity: 0.42;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
 .dd-panel {
   position: fixed;
   right: 24px;
@@ -341,6 +355,40 @@
   border-bottom-right-radius: 14px;
   background: white;
   content: "";
+}
+
+.dd-typing-bubble {
+  display: inline-flex;
+  min-width: 56px;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 14px;
+  white-space: normal;
+}
+
+.dd-typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 14px;
+}
+
+.dd-typing-dots span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: dd-typing-bounce 1.12s ease-in-out infinite;
+  background: #aeb3b8;
+}
+
+.dd-typing-dots span:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.dd-typing-dots span:nth-child(3) {
+  animation-delay: 0.28s;
 }
 
 .dd-agent-message:first-child .dd-bubble::after {
