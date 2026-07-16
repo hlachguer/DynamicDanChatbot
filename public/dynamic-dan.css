@@ -193,8 +193,8 @@
 .dd-expanded .dd-panel {
   right: 24px;
   bottom: 24px;
-  width: min(620px, calc(100vw - 48px));
-  height: min(720px, calc(100vh - 48px));
+  width: min(470px, calc(100vw - 48px));
+  height: min(780px, calc(100vh - 48px));
 }
 
 .dd-inline .dd-panel {
