@@ -11,9 +11,9 @@
     "id": "services",
     "title": "Core Services",
     "url": "https://dynamicecohome.com/",
-    "keywords": ["services", "solar", "hvac", "roofing", "windows", "home energy audit", "leasing", "businesses"],
-    "text": "Approved service categories from the support guidelines include home energy audits, solar, HVAC, roofing, windows, leasing information, and business services. Do not add extra service categories unless they are confirmed in the knowledge base.",
-    "shortAnswer": "Dynamic EcoHome can help with home energy audits, solar, HVAC, roofing, windows, leasing information, and business service questions."
+    "keywords": ["services", "solar", "solar panels", "battery storage", "backup power", "hvac", "roofing", "windows", "home energy audit", "attic insulation", "blown-in insulation", "air sealing", "generators", "commercial solar", "leasing", "businesses", "rebates", "financing", "incentives", "texas"],
+    "text": "Dynamic EcoHome offers whole-home energy-efficiency upgrades for Texas homeowners and businesses, including free home energy audits, solar panel installation, solar battery storage and backup power, high-efficiency HVAC systems, attic and blown-in insulation, energy-efficient windows and air sealing, roofing, generators, commercial solar solutions, and guidance on rebates, financing, and available incentive programs. Do not invent specific prices, financing terms, rebate amounts, incentive eligibility, warranties, service-area guarantees, or timelines. For exact program details, collect lead information or hand off to a Dynamic EcoHome teammate.",
+    "shortAnswer": "Dynamic EcoHome offers whole-home energy-efficiency upgrades for Texas homeowners and businesses, including:\n\n- Free home energy audits\n- Solar panel installation\n- Solar battery storage and backup power\n- High-efficiency HVAC systems\n- Attic and blown-in insulation\n- Energy-efficient windows and air sealing\n- Roofing\n- Generators\n- Commercial solar solutions\n- Guidance on rebates, financing, and available incentive programs\n\nIts approach is to assess the entire property and combine upgrades that reduce utility costs, improve indoor comfort, and increase energy independence."
   },
   {
     "id": "energy-audit",
