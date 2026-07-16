@@ -258,20 +258,39 @@ export function createLocalReply(message, knowledge, options = {}) {
 }
 
 export function trimToSentences(text, maxSentences = 5) {
-  const normalized = String(text || "")
+  const normalized = normalizeResponseText(text)
     .replace(/\b(\d+)\.\s+/g, "$1) ")
-    .replace(/\s+/g, " ")
     .trim();
   if (!normalized) {
     return normalized;
   }
 
-  const sentences = normalized.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
-  if (!sentences || sentences.length <= maxSentences) {
+  if (hasListFormatting(normalized)) {
     return normalized;
   }
 
+  const paragraph = normalized.replace(/\s+/g, " ");
+  const sentences = paragraph.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+  if (!sentences || sentences.length <= maxSentences) {
+    return paragraph;
+  }
+
   return sentences.slice(0, maxSentences).join(" ").trim();
+}
+
+function hasListFormatting(text) {
+  return /(^|\n)\s*(?:[-•]|\d+[.)])\s+\S/.test(String(text || ""));
+}
+
+function normalizeResponseText(text) {
+  return String(text || "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/^\s*[•*]\s+/gm, "- ")
+    .split("\n")
+    .map((line) => line.replace(/[ \t]+/g, " ").trim())
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 export function sanitizeAiResponse(text, message, options = {}) {
@@ -284,13 +303,13 @@ export function sanitizeAiResponse(text, message, options = {}) {
     return handoffReply({ supportEmail, supportPhone });
   }
 
-  let answer = text
+  let answer = String(text)
     .replace(/\b(as an ai|as a language model|chatgpt)\b/gi, "as Dynamic Dan")
     .replace(/\bPalmetto(?: Solar)?\b/gi, "general energy guidance")
-    .replace(/\*\*(.*?)\*\*/g, "$1")
-    .replace(/\*(.*?)\*/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/\*\*([\s\S]*?)\*\*/g, "$1")
+    .replace(/\*(.*?)\*/g, "$1");
+
+  answer = normalizeResponseText(answer);
 
   const hasMoneyAmount = /(^|[\s(])[$]\s?\d|\b\d+(\.\d+)?\s?(dollars|usd)\b/i.test(answer);
   if (hasMoneyAmount && !isPricingQuestion(message)) {
