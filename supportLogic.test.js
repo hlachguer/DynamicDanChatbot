@@ -6,6 +6,8 @@ import {
   isPricingQuestion,
   needsHumanForPolicy,
   publicSources,
+  pricingReply,
+  sanitizeAiResponse,
   scoreKnowledge
 } from "../src/supportLogic.js";
 
@@ -58,6 +60,7 @@ test("scores matching knowledge records", () => {
 test("classifies pricing as lead capture", () => {
   const result = classifyMessage("Can I get a quote for HVAC?", knowledge);
   assert.equal(result.action, "collect_lead");
+  assert.match(pricingReply(), /ZIP code/);
 });
 
 test("local replies include sources for known topics", () => {
@@ -69,4 +72,13 @@ test("local replies include sources for known topics", () => {
 test("hidden educational records are not exposed as public sources", () => {
   const sources = publicSources(scoreKnowledge("Why do I have drafts?", knowledge));
   assert.equal(sources.some((source) => source.url === "https://example.com/background"), false);
+});
+
+test("sanitizes AI responses without flattening bullet lists", () => {
+  const answer = sanitizeAiResponse(
+    "Dynamic EcoHome offers:\n- Solar panel installation\n- HVAC systems\n- Roofing\n\nA free audit is usually the best place to start.",
+    "what services do you offer"
+  );
+
+  assert.match(answer, /offers:\n- Solar panel installation\n- HVAC systems\n- Roofing\n\nA free audit/);
 });
