@@ -10,6 +10,54 @@
     "image/png",
     "image/webp"
   ]);
+  const SESSION_STORAGE_VERSION = 1;
+  const SESSION_STORAGE_KEY = `dynamic-dan-session-v${SESSION_STORAGE_VERSION}`;
+  const VISITOR_STORAGE_KEY = "dynamic-dan-visitor-id";
+  const DEFAULT_SESSION_TTL_DAYS = 45;
+  const MAX_STORED_MESSAGES = 40;
+  const MAX_SERVICE_INTERESTS = 8;
+  const SERVICE_INTEREST_RULES = [
+    {
+      label: "free home energy audit",
+      terms: ["energy audit", "free audit", "audit", "bill analysis", "energy bill", "utility bill"]
+    },
+    {
+      label: "solar",
+      terms: ["solar", "solar panel", "solar panels", "panel installation"]
+    },
+    {
+      label: "battery storage",
+      terms: ["battery", "batteries", "storage", "backup power"]
+    },
+    {
+      label: "HVAC",
+      terms: ["hvac", "air conditioning", "ac", "heating", "cooling", "furnace"]
+    },
+    {
+      label: "insulation",
+      terms: ["insulation", "attic", "blown-in", "air sealing", "air leak", "draft"]
+    },
+    {
+      label: "windows",
+      terms: ["window", "windows", "glass", "seal", "drafty window"]
+    },
+    {
+      label: "roofing",
+      terms: ["roof", "roofing", "shingles", "leak", "storm damage"]
+    },
+    {
+      label: "generators",
+      terms: ["generator", "generators"]
+    },
+    {
+      label: "commercial solar",
+      terms: ["commercial", "business", "businesses", "company", "organization"]
+    },
+    {
+      label: "rebates, financing, and incentives",
+      terms: ["rebate", "rebates", "incentive", "incentives", "financing", "tax credit"]
+    }
+  ];
 
   function getScriptOptions() {
     const script = document.currentScript;
@@ -34,7 +82,9 @@
       floating: script.dataset.floating !== "false",
       open: script.dataset.open === "true",
       teaser: script.dataset.teaser || "Speak with an agent!",
-      logoUrl: script.dataset.logoUrl || DEFAULT_LOGO_URL
+      logoUrl: script.dataset.logoUrl || DEFAULT_LOGO_URL,
+      persistSession: script.dataset.persistSession !== "false",
+      sessionTtlDays: Number(script.dataset.sessionTtlDays || DEFAULT_SESSION_TTL_DAYS)
     };
   }
 
@@ -198,12 +248,112 @@
     }
   }
 
+  function getLocalStorage() {
+    try {
+      return window.localStorage;
+    } catch {
+      return null;
+    }
+  }
+
+  function readStoredJson(key) {
+    try {
+      const storage = getLocalStorage();
+      const raw = storage?.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeStoredJson(key, value) {
+    try {
+      getLocalStorage()?.setItem(key, JSON.stringify(value));
+    } catch {
+      // Storage may be disabled or full. The widget should keep working in memory.
+    }
+  }
+
+  function removeStoredValue(key) {
+    try {
+      getLocalStorage()?.removeItem(key);
+    } catch {
+      // Ignore storage cleanup failures.
+    }
+  }
+
+  function normalizeStoredMessages(messages) {
+    if (!Array.isArray(messages)) {
+      return [];
+    }
+
+    return messages
+      .filter((message) => message && !message.typing && typeof message.content === "string")
+      .map((message) => ({
+        role: message.role === "assistant" ? "assistant" : "user",
+        content: message.content.slice(0, 1400),
+        sources: Array.isArray(message.sources)
+          ? message.sources
+              .filter((source) => source && typeof source.url === "string")
+              .slice(0, 3)
+              .map((source) => ({
+                title: String(source.title || "Source").slice(0, 120),
+                url: String(source.url).slice(0, 500)
+              }))
+          : []
+      }))
+      .slice(-MAX_STORED_MESSAGES);
+  }
+
+  function mergeUnique(values) {
+    return [...new Set(values.filter(Boolean))].slice(0, MAX_SERVICE_INTERESTS);
+  }
+
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function textHasTerm(lowerText, term) {
+    const normalizedTerm = String(term || "").toLowerCase();
+    if (/^[a-z0-9]+$/.test(normalizedTerm) && normalizedTerm.length <= 3) {
+      return new RegExp(`\\b${escapeRegExp(normalizedTerm)}\\b`).test(lowerText);
+    }
+    return lowerText.includes(normalizedTerm);
+  }
+
+  function detectServiceInterests(text) {
+    const lowerText = String(text || "").toLowerCase();
+    return SERVICE_INTEREST_RULES
+      .filter((rule) => rule.terms.some((term) => textHasTerm(lowerText, term)))
+      .map((rule) => rule.label);
+  }
+
+  function normalizeSessionContext(context = {}) {
+    return {
+      startedAt:
+        typeof context.startedAt === "string" && context.startedAt
+          ? context.startedAt
+          : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      lastPageUrl:
+        typeof context.lastPageUrl === "string" ? context.lastPageUrl.slice(0, 500) : "",
+      messageCount: Number.isFinite(Number(context.messageCount)) ? Number(context.messageCount) : 0,
+      serviceInterests: Array.isArray(context.serviceInterests)
+        ? mergeUnique(context.serviceInterests.map((item) => String(item).slice(0, 80)))
+        : []
+    };
+  }
+
   function getVisitorId() {
-    const key = "dynamic-dan-visitor-id";
-    let id = window.localStorage.getItem(key);
+    const storage = getLocalStorage();
+    let id = storage?.getItem(VISITOR_STORAGE_KEY);
     if (!id) {
       id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
-      window.localStorage.setItem(key, id);
+      try {
+        storage?.setItem(VISITOR_STORAGE_KEY, id);
+      } catch {
+        // Keep the generated ID for this page view if persistent storage is unavailable.
+      }
     }
     return id;
   }
@@ -259,14 +409,102 @@
         floating: options.floating !== false,
         open: Boolean(options.open),
         teaser: options.teaser || "Speak with an agent!",
-        logoUrl: options.logoUrl || DEFAULT_LOGO_URL
+        logoUrl: options.logoUrl || DEFAULT_LOGO_URL,
+        persistSession: options.persistSession !== false,
+        sessionTtlMs:
+          Math.max(
+            1,
+            Number.isFinite(Number(options.sessionTtlDays))
+              ? Number(options.sessionTtlDays)
+              : DEFAULT_SESSION_TTL_DAYS
+          ) *
+          24 *
+          60 *
+          60 *
+          1000
       };
       this.visitorId = getVisitorId();
-      this.messages = [{ role: "assistant", content: DEFAULT_GREETING }];
-      this.lastQuestion = "";
-      this.isOpen = this.options.open || !this.options.floating;
-      this.isTeaserDismissed = false;
+      const storedSession = this.loadStoredSession();
+      this.messages = storedSession?.messages?.length
+        ? storedSession.messages
+        : [{ role: "assistant", content: DEFAULT_GREETING }];
+      this.lastQuestion = storedSession?.lastQuestion || this.findLastUserQuestion();
+      this.sessionContext = normalizeSessionContext(storedSession?.sessionContext || {});
+      this.sessionContext = this.buildSessionContext(this.messages);
+      this.isOpen = this.options.open || !this.options.floating || Boolean(storedSession?.isOpen);
+      this.isTeaserDismissed = Boolean(storedSession?.isTeaserDismissed);
       this.isExpanded = false;
+    }
+
+    loadStoredSession() {
+      if (!this.options.persistSession) {
+        return null;
+      }
+
+      const stored = readStoredJson(SESSION_STORAGE_KEY);
+      if (!stored || stored.version !== SESSION_STORAGE_VERSION) {
+        return null;
+      }
+
+      const updatedAt = Date.parse(stored.updatedAt || "");
+      if (!updatedAt || Date.now() - updatedAt > this.options.sessionTtlMs) {
+        removeStoredValue(SESSION_STORAGE_KEY);
+        return null;
+      }
+
+      return {
+        messages: normalizeStoredMessages(stored.messages),
+        lastQuestion:
+          typeof stored.lastQuestion === "string" ? stored.lastQuestion.slice(0, 1000) : "",
+        sessionContext: normalizeSessionContext(stored.sessionContext || {}),
+        isOpen: Boolean(stored.isOpen),
+        isTeaserDismissed: Boolean(stored.isTeaserDismissed)
+      };
+    }
+
+    findLastUserQuestion() {
+      const lastUserMessage = [...this.messages]
+        .reverse()
+        .find((message) => message.role === "user" && typeof message.content === "string");
+      return lastUserMessage?.content || "";
+    }
+
+    buildSessionContext(messages = this.messages) {
+      const storedMessages = normalizeStoredMessages(messages);
+      const serviceInterests = mergeUnique([
+        ...(this.sessionContext?.serviceInterests || []),
+        ...storedMessages.flatMap((message) =>
+          message.role === "user" ? detectServiceInterests(message.content) : []
+        )
+      ]);
+
+      return normalizeSessionContext({
+        ...(this.sessionContext || {}),
+        updatedAt: new Date().toISOString(),
+        lastPageUrl: window.location.href,
+        messageCount: storedMessages.length,
+        serviceInterests
+      });
+    }
+
+    persistSession() {
+      if (!this.options.persistSession) {
+        return;
+      }
+
+      const messages = normalizeStoredMessages(this.messages);
+      this.sessionContext = this.buildSessionContext(messages);
+      writeStoredJson(SESSION_STORAGE_KEY, {
+        version: SESSION_STORAGE_VERSION,
+        visitorId: this.visitorId,
+        updatedAt: new Date().toISOString(),
+        pageUrl: window.location.href,
+        messages,
+        lastQuestion: this.lastQuestion || this.findLastUserQuestion(),
+        sessionContext: this.sessionContext,
+        isOpen: this.isOpen,
+        isTeaserDismissed: this.isTeaserDismissed
+      });
     }
 
     mount() {
@@ -455,6 +693,7 @@
       if (this.isOpen) {
         window.setTimeout(() => this.input?.focus(), 80);
       }
+      this.persistSession();
     }
 
     renderQuickActions() {
@@ -523,6 +762,7 @@
       );
 
       this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+      this.persistSession();
     }
 
     setLoading(isLoading) {
@@ -615,7 +855,8 @@
             mimeType,
             fileData,
             pageUrl: window.location.href,
-            visitorId: this.visitorId
+            visitorId: this.visitorId,
+            sessionContext: this.buildSessionContext()
           })
         });
         const payload = await response.json().catch(() => ({}));
@@ -675,6 +916,7 @@
             message,
             pageUrl: window.location.href,
             visitorId: this.visitorId,
+            sessionContext: this.buildSessionContext(),
             conversation: this.messages
               .filter((item) => !item.typing)
               .slice(-8)
@@ -745,7 +987,8 @@
               ...data,
               question: this.lastQuestion,
               pageUrl: window.location.href,
-              visitorId: this.visitorId
+              visitorId: this.visitorId,
+              sessionContext: this.buildSessionContext()
             })
           });
           const payload = await response.json();
