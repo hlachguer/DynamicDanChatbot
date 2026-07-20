@@ -18,7 +18,11 @@ import { loadKnowledge, logChatEvent, publicPath, saveLead } from "./storage.js"
 await loadEnv();
 
 const port = Number(process.env.PORT || 3001);
-const host = process.env.HOST || "127.0.0.1";
+const configuredHost = process.env.HOST || "0.0.0.0";
+const host =
+  process.env.RENDER && ["127.0.0.1", "localhost"].includes(configuredHost)
+    ? "0.0.0.0"
+    : configuredHost;
 const supportEmail = process.env.SUPPORT_EMAIL || DEFAULT_SUPPORT_EMAIL;
 const supportPhone = process.env.SUPPORT_PHONE || DEFAULT_SUPPORT_PHONE;
 const publicDir = publicPath();
