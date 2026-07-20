@@ -796,6 +796,9 @@
       if (toggle) {
         toggle.textContent = isMinimized ? "+" : "-";
       }
+      window.setTimeout(() => {
+        this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+      }, 0);
     }
 
     toggleLeadForm(form) {
@@ -1016,6 +1019,9 @@
       });
 
       this.panel.insertBefore(form, this.form);
+      window.setTimeout(() => {
+        this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+      }, 0);
     }
   }
 
