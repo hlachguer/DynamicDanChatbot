@@ -30,6 +30,23 @@ function cleanBillAnalysis(text) {
     .trim();
 }
 
+function formatSessionContext(sessionContext = {}) {
+  const lines = [];
+  if (Array.isArray(sessionContext.serviceInterests) && sessionContext.serviceInterests.length) {
+    lines.push(`Known service interests: ${sessionContext.serviceInterests.join(", ")}`);
+  }
+  if (sessionContext.messageCount) {
+    lines.push(`Stored conversation messages: ${sessionContext.messageCount}`);
+  }
+  if (sessionContext.lastPageUrl) {
+    lines.push(`Most recent page in this session: ${sessionContext.lastPageUrl}`);
+  }
+  if (sessionContext.startedAt) {
+    lines.push(`Session started at: ${sessionContext.startedAt}`);
+  }
+  return lines.join("\n") || "No stored session context.";
+}
+
 export async function createAiReply({
   message,
   pageUrl,
@@ -37,6 +54,7 @@ export async function createAiReply({
   conversation = [],
   matches = [],
   knowledge = [],
+  sessionContext = {},
   supportEmail,
   supportPhone
 }) {
@@ -50,6 +68,7 @@ export async function createAiReply({
 
   const model = process.env.OPENAI_MODEL || "gpt-5.5";
   const companyKnowledge = buildCompanyKnowledgeContext(matches, knowledge);
+  const storedSessionContext = formatSessionContext(sessionContext);
   const recentConversation = conversation
     .slice(-8)
     .map((item) => `${item.role === "assistant" ? "Dynamic Dan" : "Visitor"}: ${item.content}`)
@@ -75,12 +94,16 @@ export async function createAiReply({
       "Use plain text. When listing services, steps, or multiple recommendations, use short hyphen bullets on separate lines.",
       "For questions like what services Dynamic EcoHome offers, answer with a brief intro, a hyphen-bulleted list, and a short closing sentence about the whole-property approach.",
       "Avoid markdown tables and heavy formatting.",
+      "Use stored conversation context naturally to maintain continuity, but do not mention tracking, browser storage, session IDs, visitor IDs, or internal analytics.",
       "Include a Dynamic EcoHome link only when it genuinely helps.",
       "Use no more than one emoji per response."
     ].join("\n"),
     input: [
       "Approved Dynamic EcoHome knowledge:",
       companyKnowledge || "No matching approved company knowledge was found.",
+      "",
+      "Stored visitor/session context:",
+      storedSessionContext,
       "",
       "Recent conversation:",
       recentConversation || "No prior conversation.",
