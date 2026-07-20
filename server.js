@@ -17,6 +17,8 @@ import { loadKnowledge, logChatEvent, publicPath, saveLead } from "./storage.js"
 
 await loadEnv();
 
+const port = Number(process.env.PORT || 3001);
+const host = process.env.HOST || "127.0.0.1";
 const supportEmail = process.env.SUPPORT_EMAIL || DEFAULT_SUPPORT_EMAIL;
 const supportPhone = process.env.SUPPORT_PHONE || DEFAULT_SUPPORT_PHONE;
 const publicDir = publicPath();
@@ -112,7 +114,34 @@ function validateBillUpload(body) {
     mimeType,
     fileData,
     pageUrl: typeof body.pageUrl === "string" ? body.pageUrl.slice(0, 500) : "",
-    visitorId: typeof body.visitorId === "string" ? body.visitorId.slice(0, 120) : ""
+    visitorId: typeof body.visitorId === "string" ? body.visitorId.slice(0, 120) : "",
+    sessionContext: validateSessionContext(body.sessionContext)
+  };
+}
+
+function validateSessionContext(context) {
+  const sessionContext = context && typeof context === "object" ? context : {};
+  const serviceInterests = Array.isArray(sessionContext.serviceInterests)
+    ? sessionContext.serviceInterests
+        .filter((item) => typeof item === "string")
+        .map((item) => item.trim().slice(0, 80))
+        .filter(Boolean)
+        .slice(0, 8)
+    : [];
+
+  return {
+    startedAt:
+      typeof sessionContext.startedAt === "string"
+        ? sessionContext.startedAt.slice(0, 80)
+        : "",
+    lastPageUrl:
+      typeof sessionContext.lastPageUrl === "string"
+        ? sessionContext.lastPageUrl.slice(0, 500)
+        : "",
+    messageCount: Number.isFinite(Number(sessionContext.messageCount))
+      ? Number(sessionContext.messageCount)
+      : 0,
+    serviceInterests
   };
 }
 
@@ -126,6 +155,7 @@ function validateMessage(body) {
     message,
     pageUrl: typeof body.pageUrl === "string" ? body.pageUrl.slice(0, 500) : "",
     visitorId: typeof body.visitorId === "string" ? body.visitorId.slice(0, 120) : "",
+    sessionContext: validateSessionContext(body.sessionContext),
     conversation: Array.isArray(body.conversation)
       ? body.conversation
           .slice(-8)
@@ -142,7 +172,7 @@ function validateLead(body) {
   const name = String(body.name || "").trim();
   const phone = String(body.phone || "").trim();
   const email = String(body.email || "").trim();
-  const zipcode = String(body.zipcode || body.zipCode || body.zip || "").trim();
+  const zipCode = String(body.zipCode || body.zip || "").trim();
 
   if (!name) {
     throw new Error("Name is required.");
@@ -152,19 +182,20 @@ function validateLead(body) {
     throw new Error("A valid phone number is required.");
   }
 
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    throw new Error("Email is not valid.");
+  if (!/^\d{5}(-\d{4})?$/.test(zipCode)) {
+    throw new Error("A valid ZIP code is required.");
   }
 
-  if (!/^\d{5}(-\d{4})?$/.test(zipcode)) {
-    throw new Error("A valid ZIP code is required.");
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error("Email is not valid.");
   }
 
   return {
     name,
     phone,
+    zipCode,
     email,
-    zipcode,
+    sessionContext: validateSessionContext(body.sessionContext),
     question: String(body.question || "").trim().slice(0, 1000),
     pageUrl: String(body.pageUrl || "").trim().slice(0, 500),
     visitorId: String(body.visitorId || "").trim().slice(0, 120)
@@ -235,6 +266,9 @@ async function handleChat(req, res) {
       message: chat.message,
       pageUrl: chat.pageUrl,
       visitorId: chat.visitorId,
+      sessionStartedAt: chat.sessionContext.startedAt,
+      serviceInterests: chat.sessionContext.serviceInterests,
+      conversationMessageCount: chat.sessionContext.messageCount,
       action: reply.action,
       mode: reply.mode || "rules",
       sourceUrls: reply.sources?.map((source) => source.url) || []
@@ -296,6 +330,9 @@ async function handleBillAnalysis(req, res) {
       message: `Energy bill uploaded: ${bill.fileName}`,
       pageUrl: bill.pageUrl,
       visitorId: bill.visitorId,
+      sessionStartedAt: bill.sessionContext.startedAt,
+      serviceInterests: bill.sessionContext.serviceInterests,
+      conversationMessageCount: bill.sessionContext.messageCount,
       action: "collect_lead",
       mode: "bill_analysis",
       sourceUrls: ["https://dynamicecohome.com/home-energy-audit"]
@@ -406,8 +443,6 @@ const server = http.createServer(async (req, res) => {
   sendJson(req, res, 405, { error: "Method not allowed." });
 });
 
-const host = process.env.HOST || "0.0.0.0";
-const port = Number(process.env.PORT || 3001);
 server.listen(port, host, () => {
   console.log(`Dynamic Dan running at http://${host}:${port}`);
 });
